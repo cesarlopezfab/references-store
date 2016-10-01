@@ -1,0 +1,36 @@
+{
+  "name": "references",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:/cesarlopezfab/references-store"
+  },
+  "keywords": [
+    "rest",
+    "hateoas",
+    "spring",
+    "data",
+    "react"
+  ],
+  "author": "cesarlopezfa",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/cesarlopezfab/references-store/issues"
+  },
+  "homepage": "https://polar-thicket-74701.herokuapp.com/",
+  "dependencies": {
+    "babel-core": "^6.16.0",
+    "babel-loader": "^6.2.5",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "scripts": {
+    "watch": "webpack --watch -d"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "webpack": "^1.13.2"
+  }
+}
