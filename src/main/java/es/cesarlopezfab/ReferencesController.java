@@ -15,7 +15,7 @@ public class ReferencesController {
 	@ResponseBody
 	public List<Reference> references() {
 		final List<Reference> r = new ArrayList<>();
-		r.add(new Link("github.com", "https://github.com/cesarlopezfab"));
+		r.add(new Link("1","github.com", "https://github.com/cesarlopezfab"));
 		return r;
 	}
 
