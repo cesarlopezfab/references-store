@@ -1,7 +1,5 @@
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: none
+  
 ---
 spring:
   profiles: default
@@ -13,9 +11,15 @@ spring:
     minIdle: 2
     initialSize: 5
     removeAbandoned: true
+  jpa:
+    hibernate:
+      ddl-auto: none
 ---
 spring:
   profiles: test
   datasource:
     url: jdbc:h2:mem:sampletest;MODE=MySQL  
     driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
