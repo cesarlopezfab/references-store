@@ -173,7 +173,7 @@
 								<artifactItem>
 									<groupId>org.yaml</groupId>
 									<artifactId>snakeyaml</artifactId>
-									<version>1.17</version>
+									<version>1.13</version>
 									<outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
 								</artifactItem>
 								<artifactItem>
