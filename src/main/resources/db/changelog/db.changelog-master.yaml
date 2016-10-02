@@ -9,7 +9,6 @@ databaseChangeLog:
               - column:
                   name: id
                   type: varchar(255)
-                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
