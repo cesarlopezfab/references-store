@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: cesarlopezfa
+      changes:
+        - createTable:
+            tableName: link
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
