@@ -4,45 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import lombok.Data;
+
 @Entity
+@Data
 public class Link implements Reference {
 	
-	@Id @GeneratedValue
-	public String id;
-	public String title;
-	public String url;
-	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public Link() {
-	}
-
-	public Link(String id, String title, String url) {
-		this.id = id;
-		this.title = title;
-		this.url = url;
-	}
-
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	private String id;
+	private final String title;
+	private final String url;
 }
