@@ -1,4 +1,9 @@
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+---
+spring:
   profiles: default
   datasource:
     url: ${JDBC_DATABASE_URL}
