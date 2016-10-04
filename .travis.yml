@@ -4,4 +4,4 @@ jdk:
 env:
   - SPRING_PROFILES_ACTIVE=memoryDB
 after_success:
-  - mvn clean test jacoco:report coveralls:report
+  - bash <(curl -s https://codecov.io/bash)
