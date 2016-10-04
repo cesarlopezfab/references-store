@@ -12,10 +12,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"title", "url"}, callSuper=true)
+@EqualsAndHashCode(of = {"url"}, callSuper=true)
 @ToString
 public class Link extends Reference {
 	
-	private String title;
 	private String url;
 }

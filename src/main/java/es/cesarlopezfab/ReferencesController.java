@@ -26,8 +26,8 @@ public class ReferencesController {
 	}
 	
 	@RequestMapping(value="/references", method=RequestMethod.POST, consumes="application/json")
-	public void a(@RequestBody Link link) {
-		repo.save(link);
+	public void save(@RequestBody Reference reference) {
+		repo.save(reference);
 		
 	}
 

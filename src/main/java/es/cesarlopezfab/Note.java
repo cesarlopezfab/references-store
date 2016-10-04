@@ -12,11 +12,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"title", "content"}, callSuper=true)
+@EqualsAndHashCode(of = {"content"}, callSuper=true)
 @ToString
 public class Note extends Reference {
 	
-	private String title;
 	private String content;
-
 }
