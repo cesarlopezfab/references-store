@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ReferencesController {
 	
-	private final LinkRepository repo;
+	private final ReferenceRepository repo;
 
 	@Autowired
-	ReferencesController(LinkRepository repo) {
+	ReferencesController(ReferenceRepository repo) {
 		this.repo = repo;
 	}
 	
 	@RequestMapping(value="/references", method=RequestMethod.GET)
 	@ResponseBody
-	public List<Link> references() {
+	public List<Reference> references() {
 		return repo.findAll();
 	}
 	
