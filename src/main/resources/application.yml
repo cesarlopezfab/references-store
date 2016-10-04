@@ -13,7 +13,7 @@ spring:
     removeAbandoned: true
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 ---
 spring:
   profiles: memoryDB
