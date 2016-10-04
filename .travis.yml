@@ -2,6 +2,6 @@ language: java
 jdk:
   - oraclejdk8
 env:
-  - SPRING_PROFILES_ACTIVE=test
+  - SPRING_PROFILES_ACTIVE=memoryDB
 after_success:
   - mvn clean test jacoco:report coveralls:report
