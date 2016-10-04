@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<jacoco.minimun.coverage>0.30</jacoco.minimun.coverage>
+		<jacoco.minimun.coverage>0.00</jacoco.minimun.coverage>
 		<postgresql.version>9.4-1204-jdbc41</postgresql.version>
 	</properties>
 
