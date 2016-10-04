@@ -17,7 +17,7 @@ class NewLinkReference extends Component {
     const {title, url} = this.state;
     client({
       path: '/references',
-      entity: {title, url}
+      entity: {title, url, type: 'link'}
     });
   }
   handleChange(e) {
