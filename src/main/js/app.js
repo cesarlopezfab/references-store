@@ -5,11 +5,14 @@ import mime from 'rest/interceptor/mime';
 
 const client = rest.wrap(mime, { mime: 'application/json' });
 
-class Text extends Component {
+class StateFullComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+}
+
+class Text extends StateFullComponent {
   render() {
     const is = this.props.is;
     const value = this.state[is];
@@ -17,14 +20,9 @@ class Text extends Component {
 
     return <input onChange={handleChange} value={value} name={is} type="text" placeholder={is} />
   }
-
 }
 
-class Select extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+class Select extends StateFullComponent {
   render() {
     const {c, is, values, emptyValue} = this.props;
     const value = this.state[is];
@@ -44,10 +42,9 @@ class Select extends Component {
   }
 }
 
-class NewReference extends Component {
+class NewReference extends StateFullComponent {
   constructor(props) {
     super(props);
-    this.state = {title: '', url: ''};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
