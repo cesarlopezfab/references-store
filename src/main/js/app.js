@@ -5,7 +5,22 @@ import mime from 'rest/interceptor/mime';
 
 const client = rest.wrap(mime, { mime: 'application/json' });
 
-class NewLinkReference extends Component {
+class Text extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    const is = this.props.is;
+    const value = this.state[is];
+    const handleChange = this.props.c;
+
+    return <input onChange={handleChange} value={value} name={is} type="text" placeholder={is} />
+  }
+
+}
+
+class NewReference extends Component {
   constructor(props) {
     super(props);
     this.state = {title: '', url: ''};
@@ -14,23 +29,27 @@ class NewLinkReference extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const {title, url} = this.state;
+    const {title, url, type} = this.state;
     client({
       path: '/references',
-      entity: {title, url, type: 'link'}
+      entity: {title, url, type}
     });
   }
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(this.state);
   }
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input onChange={this.handleChange} value={this.state.title} name="title" type="text" placeholder="Title" />
-        <input onChange={this.handleChange} value={this.state.url} name="url" type="text" placeholder="Url" />
+        <Text is="title" c={this.handleChange} />
+        <Text is="url" c={this.handleChange} />
+        <select name="type" value={this.state.type} onChange={this.handleChange} >
+          <option value=""></option>
+          <option value="link">Link</option>
+          <option value="note">Note</option>
+        </select>
         <input type="submit" value="Ok" />
       </form>
     )
@@ -55,7 +74,7 @@ class References extends Component {
 
     return (
         <div>
-          <NewLinkReference />
+          <NewReference />
           {references}
       </div>
     );
