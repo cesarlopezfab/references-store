@@ -20,6 +20,30 @@ class Text extends Component {
 
 }
 
+class Select extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    const {c, is, values, emptyValue} = this.props;
+    const value = this.state[is];
+
+    if (emptyValue) {
+      values.unshift('');
+    }
+    const vals = values.map(function(val) {
+      return <option key={val} value={val}>{val}</option>
+    });
+
+    return (
+      <select name={is} value={value} onChange={c} >
+        {vals}
+      </select>
+    )
+  }
+}
+
 class NewReference extends Component {
   constructor(props) {
     super(props);
@@ -45,11 +69,7 @@ class NewReference extends Component {
       <form onSubmit={this.handleSubmit}>
         <Text is="title" c={this.handleChange} />
         <Text is="url" c={this.handleChange} />
-        <select name="type" value={this.state.type} onChange={this.handleChange} >
-          <option value=""></option>
-          <option value="link">Link</option>
-          <option value="note">Note</option>
-        </select>
+        <Select is="type" values={['link', 'note']} c={this.handleChange} emptyValue />
         <input type="submit" value="Ok" />
       </form>
     )
