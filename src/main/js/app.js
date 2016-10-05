@@ -14,11 +14,10 @@ class StateFullComponent extends Component {
 
 class Text extends StateFullComponent {
   render() {
-    const is = this.props.is;
+    const {is, c} = this.props;
     const value = this.state[is];
-    const handleChange = this.props.c;
 
-    return <input onChange={handleChange} value={value} name={is} type="text" placeholder={is} />
+    return <input onChange={c} value={value} name={is} placeholder={is} type="text" />
   }
 }
 
