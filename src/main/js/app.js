@@ -23,12 +23,8 @@ class Text extends StateFullComponent {
 
 class Select extends StateFullComponent {
   render() {
-    const {c, is, values, emptyValue} = this.props;
+    const {c, is, values} = this.props;
     const value = this.state[is];
-
-    if (emptyValue) {
-      values.unshift('');
-    }
     const vals = values.map(function(val) {
       return <option key={val} value={val}>{val}</option>
     });
@@ -41,6 +37,30 @@ class Select extends StateFullComponent {
   }
 }
 
+class Link extends StateFullComponent {
+  render() {
+    const {c} = this.props;
+    return (
+      <div>
+        <Text is="title" c={c} />
+        <Text is="url" c={c} />
+      </div>
+      )
+  }
+}
+
+class Note extends StateFullComponent {
+  render() {
+    const {c} = this.props;
+    return (
+      <div>
+        <Text is="title" c={c} />
+        <Text is="content" c={c} />
+      </div>
+    )
+  }
+}
+
 class NewReference extends StateFullComponent {
   constructor(props) {
     super(props);
@@ -49,24 +69,26 @@ class NewReference extends StateFullComponent {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const {title, url, type} = this.state;
+    const {reference} = this.state;
     client({
       path: '/references',
-      entity: {title, url, type}
+      entity: reference
     });
   }
   handleChange(e) {
+    const reference = this.state.reference || {};
+    reference[e.target.name] = e.target.value;
     this.setState({
-      [e.target.name]: e.target.value
+      reference
     });
   }
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Text is="title" c={this.handleChange} />
-        <Text is="url" c={this.handleChange} />
-        <Select is="type" values={['link', 'note']} c={this.handleChange} emptyValue />
-        <input type="submit" value="Ok" />
+        <Select is="type" values={['', 'link', 'note']} c={this.handleChange} />
+          <Link c={this.handleChange} />
+          <Note c={this.handleChange} />
+          <input type="submit" value="Ok" />
       </form>
     )
   }
