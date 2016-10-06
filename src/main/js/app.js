@@ -61,6 +61,20 @@ class Note extends StateFullComponent {
   }
 }
 
+function obtainNewReferenceElement (reference, c){
+  if (!reference || !reference.type) {
+    return '';
+  }
+
+  if (reference.type == 'link') {
+    return <Link c={c} />;
+  }
+
+  if (reference.type == 'note') {
+    return <Note c={c} />;
+  }
+}
+
 class NewReference extends StateFullComponent {
   constructor(props) {
     super(props);
@@ -83,11 +97,12 @@ class NewReference extends StateFullComponent {
     });
   }
   render() {
+    const element = obtainNewReferenceElement(this.state.reference, this.handleChange);
+
     return (
       <form onSubmit={this.handleSubmit}>
-        <Select is="type" values={['', 'link', 'note']} c={this.handleChange} />
-          <Link c={this.handleChange} />
-          <Note c={this.handleChange} />
+          <Select is="type" values={['', 'link', 'note']} c={this.handleChange} />
+          {element}
           <input type="submit" value="Ok" />
       </form>
     )
