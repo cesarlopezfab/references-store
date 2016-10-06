@@ -37,27 +37,31 @@ class Select extends StateFullComponent {
   }
 }
 
+function buildTwoTextElement(first, second, c) {
+  return (
+    <div>
+    <Text is={first} c={c} />
+    <Text is={second} c={c} />
+    </div>
+  );
+}
+
 class Link extends Component {
   render() {
-    const {c} = this.props;
-    return (
-      <div>
-        <Text is="title" c={c} />
-        <Text is="url" c={c} />
-      </div>
-      )
+    return buildTwoTextElement('title', 'url', this.props.c);
   }
 }
 
 class Note extends Component {
   render() {
-    const {c} = this.props;
-    return (
-      <div>
-        <Text is="title" c={c} />
-        <Text is="content" c={c} />
-      </div>
-    )
+    return buildTwoTextElement('title', 'content', this.props.c);
+  }
+}
+
+
+class Category extends  StateFullComponent {
+  render() {
+    return buildTwoTextElement('category', 'subcategory', this.props.c);
   }
 }
 
@@ -75,17 +79,6 @@ function obtainNewReferenceElement (reference, c){
   }
 }
 
-class Category extends  StateFullComponent {
-  render() {
-    const {c} = this.props;
-    return (
-      <div>
-        <Text is="category" c={c} />
-        <Text is="subcategory" c={c} />
-      </div>
-    )
-  }
-}
 
 class NewReference extends StateFullComponent {
   constructor(props) {
