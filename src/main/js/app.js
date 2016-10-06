@@ -75,6 +75,18 @@ function obtainNewReferenceElement (reference, c){
   }
 }
 
+class Category extends  StateFullComponent {
+  render() {
+    const {c} = this.props;
+    return (
+      <div>
+        <Text is="category" c={c} />
+        <Text is="subcategory" c={c} />
+      </div>
+    )
+  }
+}
+
 class NewReference extends StateFullComponent {
   constructor(props) {
     super(props);
@@ -101,6 +113,7 @@ class NewReference extends StateFullComponent {
 
     return (
       <form onSubmit={this.handleSubmit}>
+          <Category c={this.handleChange}  />
           <Select is="type" values={['', 'link', 'note']} c={this.handleChange} />
           {element}
           <input type="submit" value="Ok" />
