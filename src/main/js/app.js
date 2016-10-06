@@ -37,7 +37,7 @@ class Select extends StateFullComponent {
   }
 }
 
-class Link extends StateFullComponent {
+class Link extends Component {
   render() {
     const {c} = this.props;
     return (
@@ -49,7 +49,7 @@ class Link extends StateFullComponent {
   }
 }
 
-class Note extends StateFullComponent {
+class Note extends Component {
   render() {
     const {c} = this.props;
     return (
@@ -63,7 +63,7 @@ class Note extends StateFullComponent {
 
 function obtainNewReferenceElement (reference, c){
   if (!reference || !reference.type) {
-    return '';
+    return <div style={{display:'none'}}></div>;
   }
 
   if (reference.type == 'link') {
@@ -129,11 +129,11 @@ class References extends Component {
   render() {
     const references = this.props.references.map(function(reference) {
       if (reference.type === 'link') {
-        return <li><LinkReference key={reference.id} title={reference.title} url={reference.url} /></li>;
+        return <li key={reference.id}><LinkReference key={reference.id} title={reference.title} url={reference.url} /></li>;
       }
 
       if (reference.type === 'note') {
-        return <li><NoteReference key={reference.id} title={reference.title} content={reference.content} /></li>;
+        return <li key={reference.id} ><NoteReference title={reference.title} content={reference.content} /></li>;
       }
     });
 
