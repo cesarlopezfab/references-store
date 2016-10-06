@@ -158,3 +158,5 @@ class References extends Component {
 client({path: '/references'}).then(function(response) {
   ReactDOM.render(<References references={response.entity}/>, document.getElementById('react'));
 });
+
+export default function() {return 'test'};

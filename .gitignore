@@ -26,3 +26,5 @@ node_modules
 src/main/resources/static/
 
 /.apt_generated/
+
+coverage/
