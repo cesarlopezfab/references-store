@@ -102,18 +102,32 @@ class LinkReference extends Component {
   }
 }
 
+class NoteReference extends Component {
+  render() {
+    const {title, content} = this.props;
+    return <span>{title}<p>{content}</p></span>;
+  }
+}
+
 
 class References extends Component {
   render() {
-
     const references = this.props.references.map(function(reference) {
-      return <LinkReference key={reference.id} title={reference.title} url={reference.url} />;
+      if (reference.type === 'link') {
+        return <li><LinkReference key={reference.id} title={reference.title} url={reference.url} /></li>;
+      }
+
+      if (reference.type === 'note') {
+        return <li><NoteReference key={reference.id} title={reference.title} content={reference.content} /></li>;
+      }
     });
 
     return (
         <div>
           <NewReference />
+          <ul>
           {references}
+          </ul>
       </div>
     );
   }
