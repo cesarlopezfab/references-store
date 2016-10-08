@@ -16,8 +16,9 @@ class Text extends StateFullComponent {
   render() {
     const {is, c} = this.props;
     const value = this.state[is];
+    const id = 'id' + Math.random();
 
-    return <input onChange={c} value={value} name={is} placeholder={is} type="text" />
+    return (<div className='form-group'><label id={id} className='sr-only'>{is}</label><input id={id} onChange={c} value={value} name={is} placeholder={is} type="text" /></div>)
   }
 }
 
@@ -30,7 +31,7 @@ class Select extends StateFullComponent {
     });
 
     return (
-      <select name={is} value={value} onChange={c} >
+      <select className='form-control' name={is} value={value} onChange={c} >
         {vals}
       </select>
     )
@@ -39,7 +40,7 @@ class Select extends StateFullComponent {
 
 function buildTwoTextElement(first, second, c) {
   return (
-    <div>
+    <div className='form-group'>
     <Text is={first} c={c} />
     <Text is={second} c={c} />
     </div>
@@ -105,11 +106,11 @@ class NewReference extends StateFullComponent {
     const element = obtainNewReferenceElement(this.state.reference, this.handleChange);
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className='row form-inline'>
           <Category c={this.handleChange}  />
           <Select is="type" values={['', 'link', 'note']} c={this.handleChange} />
           {element}
-          <input type="submit" value="Ok" />
+          <input type="submit" value="Ok" className='btn btn-primary' />
       </form>
     )
   }
@@ -133,20 +134,23 @@ class NoteReference extends Component {
 
 class References extends Component {
   render() {
-    const references = this.props.references.map(function(reference) {
+	  const wrap = function(reference, ref) {
+	        return <li className='list-group-item col-md-3' key={reference.id}>{ref}</li>;		  
+	  };
+	  const references = this.props.references.map(function(reference) {
       if (reference.type === 'link') {
-        return <li key={reference.id}><LinkReference key={reference.id} title={reference.title} url={reference.url} /></li>;
+    	  return wrap(reference, <LinkReference title={reference.title} url={reference.url} />)
       }
 
       if (reference.type === 'note') {
-        return <li key={reference.id} ><NoteReference title={reference.title} content={reference.content} /></li>;
+        return wrap(reference, <NoteReference title={reference.title} content={reference.content} />);
       }
     });
 
     return (
         <div>
           <NewReference />
-          <ul>
+          <ul className='row list-group'>
           {references}
           </ul>
       </div>
