@@ -93,6 +93,8 @@ class NewReference extends StateFullComponent {
     client({
       path: '/references',
       entity: reference
+    }).then(function() {
+    	console.log('reload');
     });
   }
   handleChange(e) {
@@ -131,19 +133,32 @@ class NoteReference extends Component {
   }
 }
 
+const wrapCloseableLi = function (reference, ref) {
+  const close = 'glyphicon glyphicon-remove pull-right text-danger';
+  const li = 'list-group-item col-md-3';
+
+  const handleClose = function () {
+    const path = '/references/' + reference.id;
+    client({path: path, entity: reference, method: 'DELETE'}).then(function () {
+      console.log('reload')
+    });
+  }
+
+  return <li className={li} key={reference.id}>
+  			{ref}<span onClick={handleClose} className={close}></span>
+  		</li>;
+};
+
 
 class References extends Component {
   render() {
-	  const wrap = function(reference, ref) {
-	        return <li className='list-group-item col-md-3' key={reference.id}>{ref}</li>;		  
-	  };
 	  const references = this.props.references.map(function(reference) {
       if (reference.type === 'link') {
-    	  return wrap(reference, <LinkReference title={reference.title} url={reference.url} />)
+    	  return wrapCloseableLi(reference, <LinkReference title={reference.title} url={reference.url} />)
       }
 
       if (reference.type === 'note') {
-        return wrap(reference, <NoteReference title={reference.title} content={reference.content} />);
+        return wrapCloseableLi(reference, <NoteReference title={reference.title} content={reference.content} />);
       }
     });
 
@@ -162,5 +177,3 @@ class References extends Component {
 client({path: '/references'}).then(function(response) {
   ReactDOM.render(<References references={response.entity}/>, document.getElementById('react'));
 });
-
-export default function() {return 'test'};
