@@ -152,8 +152,9 @@ const wrapCloseableLi = function (reference, ref) {
 class Login extends Component {
 	render() {
 		return <div>
-			With Facebook <a href="login/facebook">click here</a>
-			</div>;
+				<div>With Facebook <a href="login/facebook">click here</a></div>
+				<div>With Github <a href="login/github">click here</a></div>
+			</div>;;
 	}
 }
 
