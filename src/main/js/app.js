@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import References from './references';
+import {user} from './entities';
 
 class Login extends Component {
 	render() {
@@ -14,9 +15,7 @@ class Login extends Component {
 class Logout extends Component {
 	render() {
 		const logout = function() {
-			client({path:'/logout', entity: {}}).then(function() {
-				console.log('logged out!!');
-			});
+			user().logout();
 		}
 		return <div>
 					<button onClick={logout} className="btn btn-primary">Logout</button>

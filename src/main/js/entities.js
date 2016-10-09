@@ -33,5 +33,14 @@ function references(subscribe) {
   }
 }
 
-export default references;
+function user() {
+  return {
+    logout: function() {
+      client({path:'/logout', entity: {}}).then(function() {
+        console.log('logged out!!');
+      });
+    }
+  }
+}
 
+export {references, user};

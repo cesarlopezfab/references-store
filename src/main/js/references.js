@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import references from './entities';
+import {references} from './entities';
 
 
 class StateFullComponent extends Component {
