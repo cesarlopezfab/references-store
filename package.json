@@ -26,8 +26,6 @@
     "rest": "^2.0.0"
   },
   "scripts": {
-    "test": "babel-node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- \"src/test/js\" --compilers js:babel-register",
-    "posttest": "codecov",
     "watch": "webpack --watch -d"
   },
   "devDependencies": {
@@ -36,7 +34,6 @@
     "babel-preset-react": "^6.16.0",
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
-    "istanbul": "1.0.0-alpha.2",
     "mocha": "^3.1.0",
     "webpack": "^1.13.2"
   }
