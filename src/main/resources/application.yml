@@ -1,5 +1,15 @@
-spring:
-  
+security:
+  oauth2:
+    client:
+      clientId: 1126390864116179
+      clientSecret: 43fae5bc8de09d15b79d21a902d8a72a
+      accessTokenUri: https://graph.facebook.com/oauth/access_token
+      userAuthorizationUri: https://www.facebook.com/dialog/oauth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://graph.facebook.com/me
 ---
 spring:
   profiles: default

@@ -149,6 +149,18 @@ const wrapCloseableLi = function (reference, ref) {
   		</li>;
 };
 
+class Logout extends Component {
+	render() {
+		const logout = function() {
+			client({path:'/logout', entity: {}}).then(function() {
+				console.log('logged out!!');
+			});
+		}
+		return <div>
+					<button onClick={logout} className="btn btn-primary">Logout</button>
+				</div>
+	}
+}
 
 class References extends Component {
   render() {
@@ -164,6 +176,7 @@ class References extends Component {
 
     return (
         <div>
+          <Logout />
           <NewReference />
           <ul className='row list-group'>
           {references}
@@ -173,6 +186,9 @@ class References extends Component {
   }
 }
 
+client({path: '/user'}).then(function(response) {
+	console.log(response.entity);
+});
 
 client({path: '/references'}).then(function(response) {
   ReactDOM.render(<References references={response.entity}/>, document.getElementById('react'));
