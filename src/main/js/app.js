@@ -149,6 +149,14 @@ const wrapCloseableLi = function (reference, ref) {
   		</li>;
 };
 
+class Login extends Component {
+	render() {
+		return <div>
+			With Facebook <a href="login/facebook">click here</a>
+			</div>;
+	}
+}
+
 class Logout extends Component {
 	render() {
 		const logout = function() {
@@ -162,9 +170,17 @@ class Logout extends Component {
 	}
 }
 
-class References extends Component {
+class References extends StateFullComponent {
+
+  componentWillMount() {
+	  const self = this;
+	  client({path: '/references'}).then(function(response) {
+		 self.setState({references: response.entity}) 
+	  });
+  }
   render() {
-	  const references = this.props.references.map(function(reference) {
+	  //FIXME: this is not working properly when logged out.
+	  const references = this.state.references && this.state.references.map(function(reference) {
       if (reference.type === 'link') {
     	  return wrapCloseableLi(reference, <LinkReference title={reference.title} url={reference.url} />)
       }
@@ -176,7 +192,6 @@ class References extends Component {
 
     return (
         <div>
-          <Logout />
           <NewReference />
           <ul className='row list-group'>
           {references}
@@ -186,10 +201,17 @@ class References extends Component {
   }
 }
 
-client({path: '/user'}).then(function(response) {
-	console.log(response.entity);
-});
+class App extends Component {
+	render() {
+		return (
+		        <div>
+		          <Login />
+		          <Logout />
+		          <References />
+		      </div>
+		    );
+	}
+}
 
-client({path: '/references'}).then(function(response) {
-  ReactDOM.render(<References references={response.entity}/>, document.getElementById('react'));
-});
+ReactDOM.render(<App />, document.getElementById('react'));
+
