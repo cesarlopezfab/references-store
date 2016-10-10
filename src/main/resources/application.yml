@@ -22,7 +22,6 @@ github:
     
 ---
 spring:
-  profiles: default
   datasource:
     url: ${JDBC_DATABASE_URL}
     driverClassName: org.postgresql.Driver
