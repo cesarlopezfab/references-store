@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value="/references")
+@RequestMapping(value="/api/references")
 public class ReferencesController {
 	
 	private final ReferenceRepository repo;

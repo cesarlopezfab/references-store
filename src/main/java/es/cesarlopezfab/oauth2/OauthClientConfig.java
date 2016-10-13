@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
 
-@Configuration
 class OauthClientConfig extends WebSecurityConfigurerAdapter {
 
 	private final List<Oauth2FilterBuilder> filterBuilders;

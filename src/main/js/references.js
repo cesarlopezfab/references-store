@@ -1,39 +1,6 @@
 import React, {Component} from 'react';
 import {references} from './entities';
-
-
-class StateFullComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-}
-
-class Text extends StateFullComponent {
-  render() {
-    const {is, c} = this.props;
-    const value = this.state[is];
-    const id = 'id' + Math.random();
-
-    return (<div className='form-group'><label id={id} className='sr-only'>{is}</label><input id={id} onChange={c} value={value} name={is} placeholder={is} type="text" /></div>)
-  }
-}
-
-class Select extends StateFullComponent {
-  render() {
-    const {c, is, values} = this.props;
-    const value = this.state[is];
-    const vals = values.map(function(val) {
-      return <option key={val} value={val}>{val}</option>
-    });
-
-    return (
-      <select className='form-control' name={is} value={value} onChange={c} >
-      {vals}
-      </select>
-  )
-  }
-}
+import {Text, Select, StateFullComponent} from './components';
 
 function buildTwoTextElement(first, second, c) {
   return (

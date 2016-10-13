@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 
-abstract class Oauth2FilterBuilder {
+public abstract class Oauth2FilterBuilder {
 
 	private static final String BASE_PATH = "/login/";
 
@@ -17,7 +17,7 @@ abstract class Oauth2FilterBuilder {
 		this.oauth2ClientContext = oauth2ClientContext;
 	}
 
-	OAuth2ClientAuthenticationProcessingFilter build() {
+	public OAuth2ClientAuthenticationProcessingFilter build() {
 		return buildFilter(BASE_PATH + path(), details(), resource());
 	}
 
@@ -29,7 +29,9 @@ abstract class Oauth2FilterBuilder {
 
 	private OAuth2ClientAuthenticationProcessingFilter buildFilter(String path,
 			AuthorizationCodeResourceDetails details, ResourceServerProperties resource) {
+		details.setPreEstablishedRedirectUri("/");
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
+		
 		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(details, oauth2ClientContext);
 		filter.setRestTemplate(facebookTemplate);
 		filter.setTokenServices(new UserInfoTokenServices(resource.getUserInfoUri(), details.getClientId()));

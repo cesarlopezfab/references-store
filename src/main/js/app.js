@@ -2,15 +2,8 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import References from './references';
 import {user} from './entities';
+import {LoginRegistration} from './login';
 
-class Login extends Component {
-	render() {
-		return <div>
-				<div>With Facebook <a href="login/facebook">click here</a></div>
-				<div>With Github <a href="login/github">click here</a></div>
-			</div>;
-	}
-}
 
 class Logout extends Component {
 	render() {
@@ -28,7 +21,7 @@ class App extends Component {
 	render() {
 		return (
 		        <div>
-		          <Login />
+		          <LoginRegistration />
 		          <Logout />
 		          <References />
 		      </div>
