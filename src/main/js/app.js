@@ -11,21 +11,36 @@ class Logout extends Component {
 			user().logout();
 		}
 		return <div>
-					<button onClick={logout} className="btn btn-primary">Logout</button>
+					<button onClick={logout} className="btn btn-primary pull-right">Logout</button>
 				</div>
 	}
 }
 
+const renderApp = function(logged) {
+	if (logged) {
+		return <div>
+		<Logout />
+		<References />
+		</div>
+	} else {
+		return <LoginRegistration />
+	}
+}
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+		const self = this;
+		user(function(user) {
+			const logged = user ? true : false;
+			self.setState({
+				logged
+			});
+		});
+	}
 	render() {
-		return (
-		        <div>
-		          <LoginRegistration />
-		          <Logout />
-		          <References />
-		      </div>
-		    );
+		return renderApp(this.state.logged);
 	}
 }
 

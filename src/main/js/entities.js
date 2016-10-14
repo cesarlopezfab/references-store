@@ -4,13 +4,13 @@ import defaultRequest from 'rest/interceptor/defaultRequest';
 
 
 let client = rest.wrap(mime, { mime: 'application/json' });
-let subscribers = [];
-
+let referencesSubscribers = [];
+let userSubs = [];
 const referencesPath = '/api/references';
 
-function refreshFromServer() {
+function refreshReferences() {
   client({path: referencesPath}).then(function(response) {
-    subscribers.forEach(function(notify) {
+    referencesSubscribers.forEach(function(notify) {
       notify(response.entity);
     });
   });
@@ -18,8 +18,8 @@ function refreshFromServer() {
 
 function references(subscribe) {
   if (subscribe) {
-    subscribers.push(subscribe);
-    refreshFromServer();
+    referencesSubscribers.push(subscribe);
+    refreshReferences();
   }
 
   return {
@@ -27,32 +27,54 @@ function references(subscribe) {
       client({
         path: referencesPath,
         entity: reference
-      }).then(refreshFromServer);
+      }).then(refreshReferences);
     },
     delete: function(reference) {
       const path = referencesPath + '/' + reference.id;
-      client({path: path, entity: reference, method: 'DELETE'}).then(refreshFromServer);
+      client({path: path, entity: reference, method: 'DELETE'}).then(refreshReferences);
     }
   }
 }
 
-function user() {
+function userForm(path, user) {
+  return client({path, entity: user, headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
+}
+
+function addAuthorizationHeaderToFollowingRequests(header) {
+  client = client.wrap(defaultRequest, {headers: {'Authorization': header}});
+}
+function removeAuthorizationHeaderToFollowingRequests() {
+  client = client.wrap(defaultRequest, {headers: {}});
+}
+
+function user(callback) {
+  if (callback) {
+    userSubs.push(callback);
+  }
   return {
     add: function(user) {
-      client({path:'/auth/register', entity: user, headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function(response) {
-        client = client.wrap(defaultRequest, {headers: {'Authorization': response.headers.Authorization}});
-        refreshFromServer();
+      userForm('/auth/register', user).then(function(response) {
+        addAuthorizationHeaderToFollowingRequests(response.headers.Authorization);
+        refreshReferences();
       });
     },
     login: function(user) {
-      client({path:'/auth', entity: user, headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function(response) {
-        client = client.wrap(defaultRequest, {headers: {'Authorization': response.headers.Authorization}});
-        refreshFromServer();
+      userForm('/auth', user).then(function(response) {
+        addAuthorizationHeaderToFollowingRequests(response.headers.Authorization);
+        client('/api/user').then(function(response) {
+          userSubs.forEach(function(callback) {
+            callback(response.entity);
+          });
+        });
       });
     },
     logout: function() {
       client({path:'/auth/logout', entity: {}}).then(function() {
-        console.log('logged out!!');
+        removeAuthorizationHeaderToFollowingRequests();
+        userSubs.forEach(function(callback) {
+          callback();
+        });
+
       });
     }
   }
