@@ -45,12 +45,19 @@ public class AuthFilter extends AbstractAuthenticationProcessingFilter {
 
 		String path = new UrlPathHelper().getPathWithinApplication(request);
 
+		
 		if ("/auth".equals(path)) {
-			return addAuthenticationTo(response, extractUserFrom(request));
+			User user = extractUserFrom(request);
+			User storedUser = userService.loadUserByUsername(user.getUsername());
+			if (!storedUser.getPassword().equals(user.getPassword())) {
+				throw new RuntimeException("Password do not match");
+			}
+			
+			return addAuthenticationTo(response, user);
 		}
 
 		if ("/auth/register".equals(path)) {
-			User user = extractUserFrom(request);
+			User user = extractUserFrom(request);;
 			if (userExists(user.getUsername())) {
 				throw new RuntimeException("User already exists");
 			} else {
