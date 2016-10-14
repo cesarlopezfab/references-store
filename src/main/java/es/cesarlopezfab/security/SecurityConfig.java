@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CompositeFilter;
 
+import es.cesarlopezfab.AppUserRepository;
 import es.cesarlopezfab.oauth2.Oauth2FilterBuilder;
 
 @EnableWebSecurity
@@ -34,9 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final TokenAuthenticationService tokenAuthenticationService;
 
 	@Autowired
-	public SecurityConfig(List<Oauth2FilterBuilder> filterBuilders) {
+	public SecurityConfig(List<Oauth2FilterBuilder> filterBuilders, AppUserRepository repo) {
 		super(true);
-		this.userService = new UserService();
+		this.userService = new UserService(repo);
 		tokenAuthenticationService = new TokenAuthenticationService(new TokenHandler("ultraSecret", userService));
 		this.filterBuilders = filterBuilders;
 	}
