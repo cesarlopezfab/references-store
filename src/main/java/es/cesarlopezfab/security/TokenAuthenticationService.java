@@ -12,8 +12,8 @@ public class TokenAuthenticationService {
 
 	private final TokenHandler tokenHandler;
 
-	public TokenAuthenticationService(String secret, UserService userService) {
-		tokenHandler = new TokenHandler(secret, userService);
+	public TokenAuthenticationService(TokenHandler tokenHandler) {
+		this.tokenHandler = tokenHandler;
 	}
 
 	public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {

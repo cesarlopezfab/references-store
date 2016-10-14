@@ -29,12 +29,12 @@ public class AuthFilter extends AbstractAuthenticationProcessingFilter {
 		this.tokenAuthenticationService = tokenAuthenticationService;
 		this.userService = userService;
 		this.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler() {
-			
+
 			@Override
 			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 					Authentication authentication) throws IOException, ServletException {
 				// no-op continue chain
-				
+
 			}
 		});
 	}
@@ -42,41 +42,50 @@ public class AuthFilter extends AbstractAuthenticationProcessingFilter {
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-		
+
 		String path = new UrlPathHelper().getPathWithinApplication(request);
-		
+
 		if ("/auth".equals(path)) {
-
-			String username = request.getParameter("email");
-			String password = request.getParameter("password");
-			Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
-			
-			
-			UserAuthentication authentication = new UserAuthentication(new User(username, password, authorities));
-			tokenAuthenticationService.addAuthentication(response, authentication);
-			return authentication;			
+			return addAuthenticationTo(response, extractUserFrom(request));
 		}
-		
-		if ("/auth/register".equals(path)) {
-			String username = request.getParameter("email");
-			String password = request.getParameter("password");
-			Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
-			
-			// FIXME: Refactor this ugly code O.o
-			try {
-				userService.loadUserByUsername(username);
-				throw new RuntimeException("User already exists");
-			} catch(UsernameNotFoundException e) {
-				userService.addUser(new User(username, password, authorities));
 
-				UserAuthentication authentication = new UserAuthentication(new User(username, password, authorities));
-				tokenAuthenticationService.addAuthentication(response, authentication);
-				return authentication;
+		if ("/auth/register".equals(path)) {
+			User user = extractUserFrom(request);
+			if (userExists(user.getUsername())) {
+				throw new RuntimeException("User already exists");
+			} else {
+				userService.addUser(user);
+				return addAuthenticationTo(response, user);
 			}
-			
+
 		}
 		return null;
-		
+
+	}
+
+	private boolean userExists(String username) {
+		try {
+			userService.loadUserByUsername(username);
+			return true;
+		} catch (UsernameNotFoundException e) {
+			return false;
+		}
+
+	}
+
+	private Authentication addAuthenticationTo(HttpServletResponse response, User user) {
+		UserAuthentication authentication = new UserAuthentication(user);
+		tokenAuthenticationService.addAuthentication(response, authentication);
+		return authentication;
+	}
+
+	private User extractUserFrom(HttpServletRequest request) {
+		String username = request.getParameter("email");
+		String password = request.getParameter("password");
+		Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
+
+		User user = new User(username, password, authorities);
+		return user;
 	}
 
 }

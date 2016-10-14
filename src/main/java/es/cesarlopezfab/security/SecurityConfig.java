@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public SecurityConfig(List<Oauth2FilterBuilder> filterBuilders) {
 		super(true);
 		this.userService = new UserService();
-		tokenAuthenticationService = new TokenAuthenticationService("ultraSecret", userService);
+		tokenAuthenticationService = new TokenAuthenticationService(new TokenHandler("ultraSecret", userService));
 		this.filterBuilders = filterBuilders;
 	}
 
