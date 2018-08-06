@@ -22,7 +22,7 @@
     "babel-core": "^6.16.0",
     "babel-loader": "^6.2.5",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "react-dom": "^16.0.1",
     "rest": "^2.0.0"
   },
   "scripts": {
