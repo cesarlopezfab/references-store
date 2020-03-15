@@ -20,7 +20,7 @@
   "homepage": "https://polar-thicket-74701.herokuapp.com/",
   "dependencies": {
     "babel-core": "^6.16.0",
-    "babel-loader": "^6.2.5",
+    "babel-loader": "^7.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "rest": "^2.0.0"
